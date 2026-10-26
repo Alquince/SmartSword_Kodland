@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block titulo %}Registrarse | SmartSword{% endblock %}
+
+{% block contenido %}
+<section class="auth">
+    <div class="auth__intro">
+        <span class="auth__eyebrow">Únete a SmartSword</span>
+        <h1 class="auth__title">Crea tu cuenta</h1>
+        <p class="auth__description">Regístrate para disfrutar una experiencia más completa dentro de SmartSword.</p>
+        <ul class="auth__benefits">
+            <li class="auth__benefit">✓ Inicio de sesión funcional</li>
+            <li class="auth__benefit">✓ Datos protegidos con hash de contraseña</li>
+            <li class="auth__benefit">✓ Datos de compra más rápidos</li>
+        </ul>
+    </div>
+
+    <div class="auth__panel">
+        <form class="form" method="POST">
+            <div class="form__group">
+                <label class="form__label" for="nombre">Nombre completo</label>
+                <input class="form__input" id="nombre" name="nombre" type="text" autocomplete="name" required>
+            </div>
+            <div class="form__group">
+                <label class="form__label" for="correo">Correo electrónico</label>
+                <input class="form__input" id="correo" name="correo" type="email" autocomplete="email" required>
+            </div>
+            <div class="form__group">
+                <label class="form__label" for="contrasena">Contraseña</label>
+                <input class="form__input" id="contrasena" name="contrasena" type="password" minlength="6" autocomplete="new-password" required>
+            </div>
+            <div class="form__group">
+                <label class="form__label" for="confirmar_contrasena">Confirmar contraseña</label>
+                <input class="form__input" id="confirmar_contrasena" name="confirmar_contrasena" type="password" minlength="6" autocomplete="new-password" required>
+            </div>
+            <label class="form__check">
+                <input class="form__check-input" type="checkbox" required>
+                <span class="form__check-text">Acepto los términos y condiciones de SmartSword.</span>
+            </label>
+            <button class="button button--primary button--full" type="submit">Crear cuenta</button>
+            <p class="form__footer">¿Ya tienes cuenta? <a class="form__link" href="{{ url_for('iniciar_sesion') }}">Inicia sesión</a></p>
+        </form>
+    </div>
+</section>
+{% endblock %}

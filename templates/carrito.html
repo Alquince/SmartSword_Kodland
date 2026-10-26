@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block titulo %}Carrito | SmartSword{% endblock %}
+
+{% block contenido %}
+<section class="page-hero page-hero--compact">
+    <span class="page-hero__eyebrow">Tu selección</span>
+    <h1 class="page-hero__title">Carrito</h1>
+    <p class="page-hero__description">Revisa tus productos antes de continuar.</p>
+</section>
+
+{% if items %}
+<section class="cart">
+    <div class="cart__items">
+        {% for item in items %}
+        <article class="cart-item">
+            <img class="cart-item__image" src="{{ url_for('static', filename='img/' + item.producto.imagen) }}" alt="{{ item.producto.nombre }}">
+            <div class="cart-item__content">
+                <span class="cart-item__category">{{ item.producto.categoria }}</span>
+                <h2 class="cart-item__title">{{ item.producto.nombre }}</h2>
+                <p class="cart-item__quantity">Cantidad: {{ item.cantidad }}</p>
+                <strong class="cart-item__price">${{ "{:,}".format(item.subtotal).replace(",", ".") }}</strong>
+            </div>
+            <form class="cart-item__actions" method="POST" action="{{ url_for('eliminar_carrito', id_producto=item.producto.id) }}">
+                <button class="button button--danger button--small" type="submit">Eliminar</button>
+            </form>
+        </article>
+        {% endfor %}
+    </div>
+
+    <aside class="cart-summary">
+        <span class="cart-summary__eyebrow">Resumen</span>
+        <h2 class="cart-summary__title">Tu pedido</h2>
+        <div class="cart-summary__row">
+            <span class="cart-summary__label">Artículos</span>
+            <span class="cart-summary__value">{{ cantidad_carrito }}</span>
+        </div>
+        <div class="cart-summary__row cart-summary__row--total">
+            <span class="cart-summary__label">Total</span>
+            <strong class="cart-summary__total">${{ "{:,}".format(total).replace(",", ".") }}</strong>
+        </div>
+        <a class="button button--primary button--full" href="{{ url_for('pedido') }}">Finalizar pedido</a>
+        <a class="button button--ghost button--full" href="{{ url_for('mostrar_productos') }}">Seguir explorando</a>
+        <form method="POST" action="{{ url_for('vaciar_carrito') }}">
+            <button class="cart-summary__clear" type="submit">Vaciar carrito</button>
+        </form>
+    </aside>
+</section>
+{% else %}
+<section class="empty-state">
+    <span class="empty-state__icon">🛒</span>
+    <h2 class="empty-state__title">Tu carrito está vacío</h2>
+    <p class="empty-state__text">Agrega algún producto desde el catálogo.</p>
+    <a class="button button--primary" href="{{ url_for('mostrar_productos') }}">Ver productos</a>
+</section>
+{% endif %}
+{% endblock %}

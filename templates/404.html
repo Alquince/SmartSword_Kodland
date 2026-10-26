@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block titulo %}Página no encontrada | SmartSword{% endblock %}
+{% block contenido %}
+<section class="empty-state">
+    <span class="empty-state__icon">404</span>
+    <h1 class="empty-state__title">Esta página no existe</h1>
+    <p class="empty-state__text">Regresa al inicio y continúa explorando SmartSword.</p>
+    <a class="button button--primary" href="{{ url_for('inicio') }}">Volver al inicio</a>
+</section>
+{% endblock %}

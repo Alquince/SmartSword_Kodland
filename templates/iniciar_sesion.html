@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block titulo %}Iniciar sesión | SmartSword{% endblock %}
+
+{% block contenido %}
+<section class="auth auth--login">
+    <div class="auth__intro">
+        <span class="auth__eyebrow">Bienvenido de nuevo</span>
+        <h1 class="auth__title">Inicia sesión</h1>
+        <p class="auth__description">Accede con la cuenta que hayas creado en SmartSword.</p>
+    </div>
+
+    <div class="auth__panel">
+        <form class="form" method="POST">
+            <div class="form__group">
+                <label class="form__label" for="correo">Correo electrónico</label>
+                <input class="form__input" id="correo" name="correo" type="email" autocomplete="email" required>
+            </div>
+            <div class="form__group">
+                <label class="form__label" for="contrasena">Contraseña</label>
+                <input class="form__input" id="contrasena" name="contrasena" type="password" autocomplete="current-password" required>
+            </div>
+            <button class="button button--primary button--full" type="submit">Iniciar sesión</button>
+            <p class="form__footer">¿No tienes cuenta? <a class="form__link" href="{{ url_for('registro') }}">Regístrate</a></p>
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block titulo %}Pedido confirmado | SmartSword{% endblock %}
+
+{% block contenido %}
+<section class="confirmation">
+    <div class="confirmation__icon">✓</div>
+    <span class="confirmation__eyebrow">Pedido #{{ numero_pedido }}</span>
+    <h1 class="confirmation__title">Pedido registrado con éxito</h1>
+    <p class="confirmation__description">Gracias, <strong>{{ nombre }}</strong>. Tu pedido fue registrado correctamente.</p>
+
+    <div class="confirmation__data">
+        <div class="confirmation__row"><span class="confirmation__label">Correo</span><span class="confirmation__value">{{ correo }}</span></div>
+        <div class="confirmation__row"><span class="confirmation__label">Dirección</span><span class="confirmation__value">{{ direccion }}</span></div>
+        <div class="confirmation__row"><span class="confirmation__label">Total</span><strong class="confirmation__value">${{ "{:,}".format(total).replace(",", ".") }}</strong></div>
+    </div>
+
+    <p class="confirmation__notice">Recibirás la información de seguimiento en el correo registrado.</p>
+
+    <div class="confirmation__actions">
+        <a class="button button--primary" href="{{ url_for('inicio') }}">Volver al inicio</a>
+        <a class="button button--ghost" href="{{ url_for('mostrar_productos') }}">Explorar catálogo</a>
+    </div>
+</section>
+{% endblock %}

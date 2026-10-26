@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block titulo %}Productos | SmartSword{% endblock %}
+
+{% block contenido %}
+<section class="page-hero page-hero--compact">
+    <span class="page-hero__eyebrow">Catálogo</span>
+    <h1 class="page-hero__title">Encuentra tu próxima pieza de colección</h1>
+    <p class="page-hero__description">Explora nuestro catálogo de réplicas decorativas y artículos de colección.</p>
+</section>
+
+<section class="catalog-tools">
+    <form class="catalog-search" method="GET" action="{{ url_for('mostrar_productos') }}">
+        <label class="catalog-search__label" for="q">Buscar productos</label>
+        <div class="catalog-search__group">
+            <input class="catalog-search__input" id="q" name="q" type="search" value="{{ busqueda }}" placeholder="Ej. katana, anime...">
+            <button class="button button--primary" type="submit">Buscar</button>
+        </div>
+    </form>
+
+    <nav class="catalog-filter" aria-label="Filtrar catálogo">
+        <a class="catalog-filter__link {% if not categoria_activa %}catalog-filter__link--active{% endif %}" href="{{ url_for('mostrar_productos') }}">Todos</a>
+        <a class="catalog-filter__link {% if categoria_activa == 'Anime' %}catalog-filter__link--active{% endif %}" href="{{ url_for('mostrar_productos', categoria='Anime') }}">Anime</a>
+        <a class="catalog-filter__link {% if categoria_activa == 'Videojuegos' %}catalog-filter__link--active{% endif %}" href="{{ url_for('mostrar_productos', categoria='Videojuegos') }}">Videojuegos</a>
+    </nav>
+</section>
+
+<section class="section section--catalog">
+    {% if productos %}
+        <div class="product-grid">
+            {% for producto in productos %}
+            <article class="product-card">
+                <a class="product-card__media" href="{{ url_for('detalle_producto', id_producto=producto.id) }}">
+                    <img class="product-card__image" src="{{ url_for('static', filename='img/' + producto.imagen) }}" alt="{{ producto.nombre }}">
+                </a>
+                <div class="product-card__body">
+                    <div class="product-card__meta">
+                        <span class="product-card__category">{{ producto.categoria }}</span>
+                        <span class="product-card__tag">{{ producto.etiqueta }}</span>
+                    </div>
+                    <h2 class="product-card__title">{{ producto.nombre }}</h2>
+                    <p class="product-card__description">{{ producto.descripcion }}</p>
+                    <div class="product-card__footer">
+                        <strong class="product-card__price">${{ "{:,}".format(producto.precio).replace(",", ".") }}</strong>
+                        <a class="button button--primary button--small" href="{{ url_for('detalle_producto', id_producto=producto.id) }}">Ver detalle</a>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <span class="empty-state__icon">🔎</span>
+            <h2 class="empty-state__title">No encontramos productos</h2>
+            <p class="empty-state__text">Prueba otra búsqueda o vuelve a ver todo el catálogo.</p>
+            <a class="button button--primary" href="{{ url_for('mostrar_productos') }}">Ver todos</a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

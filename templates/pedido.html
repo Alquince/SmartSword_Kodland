@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block titulo %}Finalizar pedido | SmartSword{% endblock %}
+
+{% block contenido %}
+<section class="checkout">
+    <div class="checkout__intro">
+        <span class="checkout__eyebrow">Último paso</span>
+        <h1 class="checkout__title">Finalizar pedido</h1>
+        <p class="checkout__description">
+            Completa tus datos de contacto y entrega para registrar tu pedido.
+        </p>
+
+        <div class="checkout__summary">
+            <span class="checkout__summary-label">Total del pedido</span>
+            <strong class="checkout__summary-total">${{ "{:,}".format(total).replace(",", ".") }}</strong>
+        </div>
+    </div>
+
+    <div class="checkout__panel">
+        <form class="form" method="POST">
+            <div class="form__group">
+                <label class="form__label" for="nombre">Nombre completo</label>
+                <input class="form__input" id="nombre" name="nombre" type="text" value="{{ nombre }}" required>
+            </div>
+            <div class="form__group">
+                <label class="form__label" for="correo">Correo electrónico</label>
+                <input class="form__input" id="correo" name="correo" type="email" value="{{ correo }}" required>
+            </div>
+            <div class="form__group">
+                <label class="form__label" for="direccion">Dirección de entrega</label>
+                <input class="form__input" id="direccion" name="direccion" type="text" placeholder="Ej. Calle 10 # 20-30" required>
+            </div>
+
+            <div class="checkout__notice">
+                <span class="checkout__notice-icon">ℹ️</span>
+                <p class="checkout__notice-text">Verifica tus datos antes de confirmar el pedido.</p>
+            </div>
+
+            <button class="button button--primary button--full" type="submit">Confirmar pedido</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

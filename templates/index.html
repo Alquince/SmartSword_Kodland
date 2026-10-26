@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block titulo %}SmartSword | Anime y videojuegos{% endblock %}
+
+{% block contenido %}
+<section class="hero">
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+        <span class="hero__eyebrow">Anime · Videojuegos · Colección</span>
+        <h1 class="hero__title">Colecciona tus <span class="hero__accent">universos favoritos</span></h1>
+        <p class="hero__description">
+            Descubre réplicas decorativas y artículos de colección inspirados en historias que dejaron huella.
+        </p>
+        <div class="hero__actions">
+            <a class="button button--primary" href="{{ url_for('mostrar_productos') }}">Explorar productos</a>
+            <a class="button button--ghost" href="{{ url_for('nosotros') }}">Conocer SmartSword</a>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section__heading">
+        <span class="section__eyebrow">Explora por universo</span>
+        <h2 class="section__title">Nuestras categorías</h2>
+        <p class="section__description">Dos mundos, una misma pasión por coleccionar.</p>
+    </div>
+
+    <div class="category-grid">
+        <article class="category-card category-card--anime">
+            <div class="category-card__icon">⚔️</div>
+            <div class="category-card__content">
+                <span class="category-card__eyebrow">Colección</span>
+                <h3 class="category-card__title">Anime</h3>
+                <p class="category-card__description">Katanas y piezas decorativas de estética japonesa y fantástica.</p>
+                <a class="category-card__link" href="{{ url_for('mostrar_productos', categoria='Anime') }}">Ver anime →</a>
+            </div>
+        </article>
+
+        <article class="category-card category-card--games">
+            <div class="category-card__icon">🎮</div>
+            <div class="category-card__content">
+                <span class="category-card__eyebrow">Colección</span>
+                <h3 class="category-card__title">Videojuegos</h3>
+                <p class="category-card__description">Objetos decorativos inspirados en aventuras, héroes y mundos épicos.</p>
+                <a class="category-card__link" href="{{ url_for('mostrar_productos', categoria='Videojuegos') }}">Ver videojuegos →</a>
+            </div>
+        </article>
+    </div>
+</section>
+
+<section class="section section--surface">
+    <div class="section__heading">
+        <span class="section__eyebrow">Selección SmartSword</span>
+        <h2 class="section__title">Productos destacados</h2>
+    </div>
+
+    <div class="product-grid">
+        {% for producto in destacados %}
+        <article class="product-card">
+            <a class="product-card__media" href="{{ url_for('detalle_producto', id_producto=producto.id) }}">
+                <img class="product-card__image" src="{{ url_for('static', filename='img/' + producto.imagen) }}" alt="{{ producto.nombre }}">
+            </a>
+            <div class="product-card__body">
+                <span class="product-card__category">{{ producto.categoria }}</span>
+                <h3 class="product-card__title">{{ producto.nombre }}</h3>
+                <p class="product-card__description">{{ producto.descripcion }}</p>
+                <div class="product-card__footer">
+                    <strong class="product-card__price">${{ "{:,}".format(producto.precio).replace(",", ".") }}</strong>
+                    <a class="button button--primary button--small" href="{{ url_for('detalle_producto', id_producto=producto.id) }}">Ver producto</a>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="benefit-grid row g-4">
+        <div class="col-12 col-md-4">
+            <article class="benefit-card h-100">
+                <span class="benefit-card__icon">📦</span>
+                <h3 class="benefit-card__title">Compra sencilla</h3>
+                <p class="benefit-card__text">Compra de forma sencilla con carrito, resumen y confirmación de pedido.</p>
+            </article>
+        </div>
+        <div class="col-12 col-md-4">
+            <article class="benefit-card h-100">
+                <span class="benefit-card__icon">🔐</span>
+                <h3 class="benefit-card__title">Cuenta protegida</h3>
+                <p class="benefit-card__text">Crea tu cuenta e inicia sesión de forma segura.</p>
+            </article>
+        </div>
+        <div class="col-12 col-md-4">
+            <article class="benefit-card h-100">
+                <span class="benefit-card__icon">💬</span>
+                <h3 class="benefit-card__title">Contacto directo</h3>
+                <p class="benefit-card__text">Formulario para preguntas, información o inconvenientes con la experiencia del sitio.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="cta__content">
+        <span class="cta__eyebrow">Forma parte de la comunidad</span>
+        <h2 class="cta__title">Crea tu cuenta SmartSword</h2>
+        <p class="cta__description">Regístrate y prueba la experiencia completa de la tienda.</p>
+    </div>
+    <a class="button button--primary" href="{{ url_for('registro') }}">Crear cuenta</a>
+</section>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block titulo %}{% if producto %}{{ producto.nombre }}{% else %}Producto{% endif %} | SmartSword{% endblock %}
+
+{% block contenido %}
+{% if producto %}
+<section class="product-detail">
+    <div class="product-detail__media">
+        <img class="product-detail__image" src="{{ url_for('static', filename='img/' + producto.imagen) }}" alt="{{ producto.nombre }}">
+    </div>
+
+    <div class="product-detail__content">
+        <span class="product-detail__category">{{ producto.categoria }}</span>
+        <h1 class="product-detail__title">{{ producto.nombre }}</h1>
+        <p class="product-detail__price">${{ "{:,}".format(producto.precio).replace(",", ".") }}</p>
+        <p class="product-detail__description">{{ producto.descripcion }}</p>
+
+        <div class="product-detail__specs">
+            <div class="product-detail__spec">
+                <span class="product-detail__label">Material</span>
+                <p class="product-detail__value">{{ producto.material }}</p>
+            </div>
+            <div class="product-detail__spec">
+                <span class="product-detail__label">Dimensiones</span>
+                <p class="product-detail__value">{{ producto.dimensiones }}</p>
+            </div>
+        </div>
+
+        <div class="product-detail__notice">
+            <strong class="product-detail__notice-title">Artículo decorativo</strong>
+            <p class="product-detail__notice-text">Pieza destinada a exhibición, decoración y colección.</p>
+        </div>
+
+        <div class="product-detail__actions">
+            <form method="POST" action="{{ url_for('agregar_carrito', id_producto=producto.id) }}">
+                <button class="button button--primary" type="submit">Agregar al carrito</button>
+            </form>
+            <a class="button button--ghost" href="{{ url_for('mostrar_productos') }}">Volver al catálogo</a>
+        </div>
+    </div>
+</section>
+{% else %}
+<section class="empty-state">
+    <span class="empty-state__icon">⚠️</span>
+    <h1 class="empty-state__title">Producto no encontrado</h1>
+    <a class="button button--primary" href="{{ url_for('mostrar_productos') }}">Volver al catálogo</a>
+</section>
+{% endif %}
+{% endblock %}
